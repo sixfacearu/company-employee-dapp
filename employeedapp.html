@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Test</title>
+    <script src="web3.min.js"></script>  
+  </head>
+ <center><h2 align="center" style="color:blue;border:1px dotted black;width:500px;background:white;">MNW COMPANY</h2></center>
+  <body align="center" background="3.jpg">
+	<center><div class="cls" style="width:700px; height:400px;background: lightblue;border:1px dotted black;text-align:center;"><h3>Set Detail</h3>
+                <input id="name" type="text" placeholder="name" /><br><br>
+                <input id="age" type="text" placeholder="age" /><br><br>
+                <input id="dept" type="text" placeholder="dept" /><br><br>
+                <input id="addres" type="text" placeholder="addres" /><br><br>
+                <input id="salary" type="text" placeholder="salary" /><br><br>
+                <input id="id" type="text" placeholder="value" /><br><br>
+		<input type="button" onclick="ax()" value="save">
+               </div></br></center>
+        <center><div class="cls" style="width:700px;height:200px;background: lightblue;border:1px dotted black;text-align:center"><h3>Salry calculation</h3>
+		<input id="_id" type="text" placeholder="id" /><br><br>
+                <input id="sal" type="text" placeholder="salry" /><br><br>
+                <input id="leave" type="text" placeholder="leaves" /><br><br>
+		<input type="button" onclick="bx()" value="salry">
+	</div></br></center>
+       <center><div class="cls" style="width:700px;height:400px;background: lightblue;border:1px dotted black;text-align:center"><h3>Salry calculation</h3>
+                <input id="e_id" type="text" placeholder="e_id" /><br><br>
+                <input type="button" onclick="cx()" value="view"><br><br>
+                <input id="_name" type="text" placeholder="name" /><br><br>
+                <input id="_age" type="text" placeholder="age" /><br><br>
+                <input id="_dept" type="text" placeholder="dept" /><br><br>
+                <input id="_addres" type="text" placeholder="address" /><br><br>
+                <input id="_salary" type="text" placeholder="salary" /><br><br>
+                <input id="a_id" type="text" placeholder="id" /><br><br>
+                </div></br></center>
+                  
+</body>
+<script>
+   
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+        var emp = web3.eth.contract([
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_id",
+				"type": "uint256"
+			}
+		],
+		"name": "getdetail",
+		"outputs": [
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "age",
+				"type": "uint256"
+			},
+			{
+				"name": "dept",
+				"type": "string"
+			},
+			{
+				"name": "addres",
+				"type": "string"
+			},
+			{
+				"name": "salary",
+				"type": "uint256"
+			},
+			{
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"name": "sal",
+				"type": "uint256"
+			},
+			{
+				"name": "absent",
+				"type": "uint256"
+			}
+		],
+		"name": "salarycalculation",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "age",
+				"type": "uint256"
+			},
+			{
+				"name": "dept",
+				"type": "string"
+			},
+			{
+				"name": "addres",
+				"type": "string"
+			},
+			{
+				"name": "salary",
+				"type": "uint256"
+			},
+			{
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "setdetail",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]);
+var emp = emp.at('0x82ff8064f2d00d52274155348428c1035d66f566');
+    
+     if(!web3.isConnected()) {
+  
+        console.log("Ok");
+        
+      } else {
+        console.log("no");
+      }
+      web3.version.getNetwork((err, netId) => {
+            switch (netId) {
+              case "1":
+                console.log('This is mainnet')
+                break
+              case "2":
+                console.log('This is the deprecated Morden test network.')
+                break
+              case "3":
+                console.log('This is the ropsten test network.')
+                break
+              case "4":
+                console.log('This is the Rinkeby test network.')
+                break
+              case "42":
+                console.log('This is the Kovan test network.')
+                break
+              default:
+                console.log('This is an unknown network.')
+            }
+        })
+function ax()
+{
+var a=document.getElementById("name").value;
+var b=document.getElementById("age").value;
+var c=document.getElementById("dept").value;
+var d=document.getElementById("addres").value;
+var e=document.getElementById("salary").value;
+var f=document.getElementById("id").value;
+ 
+	return emp.setdetail(a,b,c,d,e,f,function(error,result){
+		if(!error){
+			alert("success");
+		}
+		else{
+			console.error(error);
+		}
+	});
+	
+	
+}
+function bx()
+{
+var g=document.getElementById("_id").value;
+var h=document.getElementById("sal").value;
+var i=document.getElementById("leave").value;
+   return emp.salarycalculation(g,h,i,function(error,result){
+         if(!error){
+                  alert("success");
+               }
+           else{
+                console.error(error);
+                }
+});
+}
+function cx()
+{
+var j=document.getElementById("e_id").value;
+return emp. getdetail(j,function(error,result){
+if(!error){
+     document.getElementById("_name").value=result[0];
+      document.getElementById("_age").value=result[1];
+     document.getElementById("_dept").value=result[2];
+     document.getElementById("_addres").value=result[3];
+     document.getElementById("_salary").value=result[4];
+      document.getElementById("a_id").value=result[5];
+    }
+   else{
+      alert("not a correct Id");
+      }
+});
+}
+</script>
+</html>                
